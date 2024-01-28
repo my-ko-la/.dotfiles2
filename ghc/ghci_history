@@ -1,0 +1,62 @@
+:quit
+:t (>>=)
+:t (<*>)
+:t (<$>)
+:t <$>
+[(*2), (+3)] <*> [1,2,3]
+[(*2), (+3)] <$> [1,2,3]
+(+3) Just 2
+(+3) <$> Just 2
+(Just 2) >>= half
+half >>= Just 2
+half (Just 2)
+:add monad.hs
+:remove monad.hs 
+:r
+:R
+:add monad.hs 
+(*) <$> Just2 8 <*> Just2 2
+:r
+:?
+:r
+Just2 square <*> Just2 8
+Just2 square <$> Just2 8
+square <$> Just2 8
+square (Just2 8)
+square Just2 8
+square 8
+Just2 8
+:add applicative.hs 
+Just2 8
+Just2 square <*> Just2 9
+:r
+square x = x * x
+square 4
+Just2 (square) <*> (Just2 4)
+Just2 square <*> (Just2 4)
+:r
+:
+Just2 square <*> (Just2 4)
+Just2 square <*> Just2 4
+square x = x * x
+:r
+Just2 9
+Just2 a
+:r
+Maybe2 2
+Maybe2 "Hi"
+:r
+:add applicative.hs
+:?
+main
+:r
+:t (<*>)
+:t <*>
+class \
+c
+clear
+square <$> Just 4
+square Just 4
+square 4
+square x = x * x
+k
