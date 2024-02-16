@@ -85,7 +85,7 @@ require('lazy').setup({
             -- node_path = "node",
 
             -- Path to vscode-js-debug installation.
-            debugger_path = "~/vscode-js-debug",
+            debugger_path = vim.fn.expand("~/vscode-js-debug"),
 
             -- Command to use to launch the debug server. Takes precedence over "node_path" and "debugger_path"
             -- debugger_cmd = { "js-debug-adapter" },
@@ -203,7 +203,7 @@ require('lazy').setup({
             type = "pwa-node",
             request = "attach",
             name = "Attach",
-            processId = require('dap.utils').pick_process,
+            processId = require('dap.utils').pick_process({ filter = "node" }),
             cwd = "${workspaceFolder}",
           }
         }
@@ -215,7 +215,7 @@ require('lazy').setup({
   'github/copilot.vim',
 
 
-  -- Colorscheme
+  -- Colorscheme / Theme
   -- 'arcticicestudio/nord-vim',
   'morhetz/gruvbox',
 
@@ -402,7 +402,7 @@ vim.cmd.colorscheme('gruvbox')
 -- NOTE: You can change these options as you wish!
 
 -- Set highlight on search
-vim.o.hlsearch = false
+vim.o.hlsearch = true
 vim.o.relativenumber = true
 vim.o.scrolloff = 8
 vim.o.guicursor = "n-v-c-sm:block,ci-ve:ver25,r-cr-o:hor20,i:block-blinkwait700-blinkoff400-blinkon250-Cursor/lCursor"
@@ -469,7 +469,7 @@ vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagn
 vim.keymap.set("n", "<leader>qo", "<cmd>copen<CR>", { desc = "Open qfixlist" })
 vim.keymap.set("n", "<leader>qc", "<cmd>cclose<CR>", { desc = "Close qfixlist" })
 vim.keymap.set("n", "<leader>]q", "<cmd>cnext<CR>zz", { desc = "Forward qfixlist" })
-vim.keymap.set("n", "<leader>[q;", "<cmd>cprev<CR>zz", { desc = "Backward qfixlist" })
+vim.keymap.set("n", "<leader>[q", "<cmd>cprev<CR>zz", { desc = "Backward qfixlist" })
 
 -- [[ Highlight on yank ]]
 -- See `:help vim.highlight.on_yank()`
@@ -591,7 +591,9 @@ vim.keymap.set('n', '<leader>sr', require('telescope.builtin').resume, { desc = 
 vim.defer_fn(function()
   require('nvim-treesitter.configs').setup {
     -- Add languages to be installed here that you want installed for treesitter
-    ensure_installed = { 'c', 'cpp', 'go', 'lua', 'haskell', 'python', 'rust', 'tsx', 'javascript', 'typescript', 'vimdoc', 'vim', 'bash', 'ocaml', 'java' },
+    ensure_installed = { 'c', 'cpp', 'go', 'lua', 'haskell', 'python',
+      'rust', 'tsx', 'javascript', 'typescript', 'vimdoc', 'vim', 'bash', 'ocaml', 'java'
+    },
 
     -- Autoinstall languages that are not installed. Defaults to false (but you can change for yourself!)
     auto_install = false,
@@ -688,6 +690,7 @@ local on_attach = function(_, bufnr)
 
   nmap('<leader>rn', vim.lsp.buf.rename, '[R]e[n]ame')
   nmap('<leader>ca', vim.lsp.buf.code_action, '[C]ode [A]ction')
+  nmap('<leader>j', vim.cmd.noh, 'Turn off search highlighting')
 
   nmap('gd', require('telescope.builtin').lsp_definitions, '[G]oto [D]efinition')
   nmap('gr', require('telescope.builtin').lsp_references, '[G]oto [R]eferences')
@@ -747,10 +750,8 @@ local servers = {
   -- rust_analyzer = {},
   clangd = {},
   java_language_server = {},
-  tsserver = {},
   hls = {},
-  -- html = { filetypes = { 'html', 'twig', 'hbs'} },
-
+  tsserver = {},
   lua_ls = {
     Lua = {
       workspace = { checkThirdParty = false },
