@@ -170,6 +170,7 @@ alias gitlo="git log --oneline"
 # Other
 alias scratch="cd ~/misc/scratch && nvim scratch.md"
 alias runbas="docker run --name BAS -p 8080:80 local/bas:3.4.1"
+alias cddoc="cd ~/personal/docs"
 
 # Personal scripts
 alias mvxy="sh /usr/local/bin/mvxy.sh"
