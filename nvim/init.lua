@@ -407,6 +407,12 @@ vim.o.relativenumber = true
 vim.o.scrolloff = 8
 vim.o.guicursor = "n-v-c-sm:block,ci-ve:ver25,r-cr-o:hor20,i:block-blinkwait700-blinkoff400-blinkon250-Cursor/lCursor"
 
+-- Cool floating window popup menu for completion
+vim.opt.pumblend = 17
+vim.opt.wildmode = "longest:full"
+vim.opt.wildoptions = "pum"
+
+
 -- Force splits to behave
 vim.opt.splitbelow = true
 vim.opt.splitright = true
@@ -416,6 +422,9 @@ vim.opt.cursorline = true
 
 -- Make line numbers default
 vim.wo.number = true
+
+-- Matching brackets
+vim.opt.showmatch = true
 
 -- Enable mouse mode
 vim.o.mouse = 'a'
@@ -547,7 +556,7 @@ vim.keymap.set('n', '<leader>/', function()
   })
 end, { desc = '[/] Fuzzily search in current buffer' })
 
--- Copilot keymap (copikeymap
+-- Copilot keymap (copikeymap)
 
 vim.keymap.set('i', '<C-J>', 'copilot#Accept("\\<CR>")', {
   expr = true,
@@ -567,7 +576,7 @@ vim.keymap.set("n", "N", "Nzzzv")
 
 
 vim.keymap.set("x", "<leader>p", [["_dP]])
--- vim.keymap.set("n", "<leader>s", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]]) Purpose of this remap??
+-- vim.keymap.set("n", "<leader>s", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]]) what was this again?...
 -- Prime's remaps END
 
 -- Explorer
@@ -752,6 +761,7 @@ local servers = {
   java_language_server = {},
   hls = {},
   tsserver = {},
+  zls = {},
   lua_ls = {
     Lua = {
       workspace = { checkThirdParty = false },
