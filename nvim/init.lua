@@ -32,6 +32,8 @@ require('lazy').setup({
   -- Prettier
   'prettier/vim-prettier',
 
+  'xiyaowong/transparent.nvim',
+
   -- Tmux
   {
     "christoomey/vim-tmux-navigator",
@@ -216,8 +218,8 @@ require('lazy').setup({
 
 
   -- Colorscheme / Theme
-  -- 'arcticicestudio/nord-vim',
-  'morhetz/gruvbox',
+  'arcticicestudio/nord-vim',
+  -- 'morhetz/gruvbox',
 
   -- Harpoon
   {
@@ -310,7 +312,7 @@ require('lazy').setup({
     opts = {
       options = {
         icons_enabled = false,
-        theme = 'gruvbox',
+        theme = 'nord',
         component_separators = '|',
         section_separators = '',
       },
@@ -389,13 +391,14 @@ vim.keymap.set("n", "<leader><C-n>", function() harpoon:list():clear() end)
 vim.keymap.set("n", "<C-p>", function() harpoon:list():prev() end)
 vim.keymap.set("n", "<C-n>", function() harpoon:list():next() end)
 
+require('transparent').setup {}
 
 require('gitblame').setup {
   --Note how the `gitblame_` prefix is omitted in `setup`
   enabled = true,
 }
 
-vim.cmd.colorscheme('gruvbox')
+vim.cmd.colorscheme('nord')
 
 -- [[ Setting options ]]
 -- See `:help vim.o`
@@ -753,13 +756,11 @@ require('mason-lspconfig').setup()
 --  If you want to override the default filetypes that your language server will attach to you can
 --  define the property 'filetypes' to the map in question.
 local servers = {
-  -- clangd = {},
-  -- gopls = {},
+   clangd = {},
+   gopls = {},
   -- pyright = {},
-  -- rust_analyzer = {},
+   rust_analyzer = {},
   clangd = {},
-  java_language_server = {},
-  hls = {},
   tsserver = {},
   zls = {},
   lua_ls = {

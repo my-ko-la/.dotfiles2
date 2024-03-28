@@ -4,10 +4,6 @@
 # Path to your oh-my-zsh installation.
 export ZSH="$HOME/.oh-my-zsh"
 
-export ARTIFACTORY_BINARY_PATH=subsembly
-export SUBSEMBLY_BINARY_NAME=Subsembly.BAS_3_5_2_2-beta.zip
-export ARTIFACTORY_BINARY_USER=mykola.brechko@qwist.com
-
 # Set name of the theme to load --- if set to "random", it will
 # load a random theme each time oh-my-zsh is loaded, in which case,
 # to know which specific one was loaded, run: echo $RANDOM_THEME
@@ -47,7 +43,6 @@ ZSH_THEME="half-life"
 # Uncomment the following line to enable command auto-correction.
 # ENABLE_CORRECTION="true"
 
-export ARTIFACTORY_BINARY_PASSWORD=Submerged\!fish9_5051.qwist
 # Uncomment the following line to display red dots whilst waiting for completion.
 # You can also set it to another string to have that shown instead of the default red dots.
 # e.g. COMPLETION_WAITING_DOTS="%F{yellow}waiting...%f"
@@ -90,7 +85,7 @@ source $ZSH/oh-my-zsh.sh
 # if [[ -n $SSH_CONNECTION ]]; then
 #   export EDITOR='vim'
 # else
-export EDITOR='mvim'
+export EDITOR='nvim'
 # fi
 
 # Compilation flags
@@ -103,44 +98,11 @@ export EDITOR='mvim'
 #/fcloud-tools/zsh-kubectl-prompt/kubectl.zsh
 
 autoload -U colors; colors
-source /Users/mykola.brechko/fcloud-tools/zsh-kubectl-prompt/kubectl.zsh
-RPROMPT='%{$fg[blue]%}($ZSH_KUBECTL_PROMPT)%{$reset_color%}'
-
-vault_login()
-{
-  unset VAULT_NAMESPACE
-  case $1 in
-    dev )
-    export VAULT_ADDR=https://vault.finleap.cloud:8200
-    export VAULT_NAMESPACE=fcloud-gcp-fra-dev
-    ;;
-    lab )
-    export VAULT_ADDR=https://172.16.1.14:8200
-    ;;
-    prod )
-    export VAULT_ADDR=https://vault.finleap.cloud:8200
- esac
- echo "# Logging into '$1' vault with namespace '$VAULT_NAMESPACE'!"
- vault login -method=oidc #role=admin #UNCOMMENT IF YOU ARE FCLOUD MEMBER
- echo "# Logged into '$1' vault with namespace '$VAULT_NAMESPACE'!"
-}
-
-unset VAULT_CAPATH
-
-# Example aliases
-alias fuuga="cd ~/qwist/connectivity/core-connector && nvim ."
-
+#
 # Jumping around common directories
 alias cdh="cd ~"
 alias cdm="cd ~/misc"
 alias cdo="cd ~/personal/ocaml"
-alias cdc="cd ~/qwist/connectivity"
-alias cdcc="cd ~/qwist/connectivity/core-connector"
-alias cdei="cd ~/qwist/connectivity/eidas-service"
-alias cdcg="cd ~/qwist/connectivity/connector-gateway"
-alias cdpc="cd ~/qwist/partner-configurations"
-alias cdbas="cd ~/qwist/connectivity/bank-access-server"
-alias cdtests="cd ~/misc/OPEN-10067"
 alias cdp="cd ~/personal"
 
 # Configs
@@ -153,13 +115,7 @@ alias c="clear"
 alias cl="clear && l"
 alias run="source"
 alias nv="nvim"
-
-# K8s
-alias m="monoctl"
-alias k="kubectl"
-alias mini="minikube"
-alias vault="~/fcloud-tools/vault"
-alias linkerd="~/fcloud-tools/linkerd"
+alias nvd="nvim"
 
 # git
 alias gitd="GIT_EXTERNAL_DIFF=difft git diff"
@@ -168,20 +124,24 @@ alias gitdog="git log --oneline --graph --decorate --all"
 alias gitlo="git log --oneline"
 
 # Other
-alias scratch="cd ~/misc/scratch && nvim scratch.md"
-alias runbas="docker run --name BAS -p 8080:80 local/bas:3.4.1"
 alias cddoc="cd ~/personal/docs"
 
 # Personal scripts
-alias mvxy="sh /usr/local/bin/mvxy.sh"
-alias movesshots="sh /usr/local/bin/mvxy.sh -s ~/Desktop -r reen -d ~/screenshots"
 alias fman="compgen -c | fzf | xargs man"
+alias opencf="sudo vim ~/nixos/configuration.nix"
+alias openhf="sudo vim ~/nixos/home.nix"
+alias w="warp-terminal &"
+alias bcxx="ls *.cpp | entr -c -r make run"
+alias gom="go run main.go"
+alias godemon="nodemon --watch './**/*.go' --signal SIGTERM --exec 'go' run main.go"
+alias serve="python3 -m http.serve"
 
-# Functions
-# Testing a Bank
-testbank() {
-  cd ~/misc/OPEN-10067
-  source $1
+wget_site() {
+  wget --recursive --page-requisites --html-extension --convert-links --restrict-file-names=windows --domains $1 --no-parent --adjust-extension --mirror $2
+}
+
+rebuild() {
+	sudo nixos-rebuild switch --flake ~/nixos/$1
 }
 
 # opam configuration
@@ -189,3 +149,4 @@ testbank() {
 
 [ -f "/Users/mykola.brechko/.ghcup/env" ] && source "/Users/mykola.brechko/.ghcup/env" # ghcup-env
 
+printf '\eP$f{"hook": "SourcedRcFileForWarp", "value": { "shell": "zsh" }}\x9c'
